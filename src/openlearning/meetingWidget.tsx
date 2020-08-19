@@ -15,14 +15,14 @@ export const saveMeeting = (meeting: OnlineMeeting) => {
         reply = null;
       }
 
-      if (reply) {
-        if (reply.action === 'saved') {
+      if (reply && reply.replyTo === 'saveMeeting') {
+        if (reply.response === 'saved') {
           resolve();
-          window.removeEventListener("message", receiveMessage);
-        } else if (reply.action === 'error') {
+        } else if (reply.response === 'error') {
           reject(reply.error);
-          window.removeEventListener("message", receiveMessage);
         }
+
+        window.removeEventListener("message", receiveMessage);
       }
     };
   
